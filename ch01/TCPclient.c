@@ -26,13 +26,13 @@ int main(int argc, char *argv[])
 	
 	if((he = gethostbyname(argv[1])) == NULL)
 	{
-		printf("gethostbyname() error\n");
+		printf("gethostbyname() error.\n");
 		exit(1);
 	}
 	
 	if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 	{
-		printf("socket() error\n");
+		printf("socket() error.\n");
 		exit(1);
 	}
 	
@@ -43,18 +43,18 @@ int main(int argc, char *argv[])
 	
 	if(connect(sockfd, (struct sockaddr *)&server, sizeof(server)) == -1)
 	{
-		printf("connect() error\n");
+		printf("connect() error.\n");
 		exit(1);
 	}
 	
 	if((num = recv(sockfd, buf, MAXDATASIZE, 0)) == -1)
 	{
-		printf("recv() error\n");
+		printf("recv() error.\n");
 		exit(1);
 	}
 	
 	buf[num] = '\0';
-	printf("server message: %s\n", buf);
+	printf("server message: %s.\n", buf);
 	close(sockfd);
 	return 0;
 }
