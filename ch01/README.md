@@ -5,13 +5,13 @@
 > 从服务器进程的角度来分析TCP建立连接和关闭连接时，其状态的变化过程。
 
 ##TCP套接字编程实例
->服务器端程序：[TCPserver](ch01/TCPserver.c)
+>服务器端程序：[TCPserver](TCPserver.c)
 
->客户端程序：[TCPclient](ch01/TCPclient.c)
+>客户端程序：[TCPclient](TCPclient.c)
 
 首先在窗口1中运行服务器端程序：`./TCPserver`
 
-然后再窗口2中运行客户端程序:`./TCPclient 127.0.0.1`
+然后再窗口2中运行客户端程序：`./TCPclient 127.0.0.1`
 
 服务器端运行结果：`You got a connection from client's ip is 127.0.0.1, port is 53064.`
 
