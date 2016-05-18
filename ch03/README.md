@@ -4,6 +4,7 @@
 ![](https://upload.wikimedia.org/wikipedia/commons/a/a1/InternetSocketBasicDiagram_zhtw.png)
 
 服务端实现的步骤如下：
+
 1. 使用socket()函数创建套接字。
 2. 将创建的套接字绑定到指定的地址结构。
 3. listen()函数设置套接字为监听模式，使服务器进入被动打开的状态。
@@ -11,6 +12,7 @@
 5. 接收、应答客户端的数据请求。
 
 客户端实现的步骤如下：
+
 1. 使用socket()函数创建套接字。
 2. 调用connect()函数建立一个与TCP服务器的连接。
 3. 发送数据请求，接收服务器的数据应答。
