@@ -50,7 +50,7 @@ void process(FILE *fp, int sockfd){
   char sendline[MAXDATASIZE], recvline[MAXDATASIZE];
   int num;
   printf("Connected to server.\n");
-  printf("Input client's name : ");
+  printf("Input client's name:");
   if( fgets(sendline, MAXDATASIZE, fp) == NULL){
     printf("\nExit.\n");
     return ;
@@ -64,11 +64,11 @@ void process(FILE *fp, int sockfd){
       return ;
     }
     recvline[num] = '\0';
-    printf("Server Message: %s \n", recvline);
+    printf("Server Message:%s\n", recvline);
   }
 }
 
 char *getMessage(char *sendline, int len, FILE *fp){
-  printf("Input string to server: ");
+  printf("Input string to server:");
   return (fgets(sendline, MAXDATASIZE, fp));
 }

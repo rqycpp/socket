@@ -30,6 +30,12 @@ pid_t waitpid(pit_t pid, int *statloc, int option);//pid == -1 && option == 0 �
 
 ## 上机实战
 
+1. 多进程并发服务器：
+
+> 服务端程序：[Server](Multiprocessing_server.c)
+
+> 客户端程序：[Client](Multiprocessing_client.c)
+
 ## 课堂笔记
 
 - 服务器按处理方式分类：迭代服务器、并发服务器。

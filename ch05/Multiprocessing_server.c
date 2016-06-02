@@ -69,20 +69,20 @@ void process_cli(int connfd, struct sockaddr_in client){
   int num;
   char recvbuf[MAXDATASIZE], sendbuf[MAXDATASIZE], cli_name[MAXDATASIZE];
 
-  printf("You got a connection from %s .", inet_ntoa(client.sin_addr));
+  printf("You got a connection from %s.\n", inet_ntoa(client.sin_addr));
 
-  num = recv(connfd, cli_name, MAXDATASIZE, 0);
+  num = recv(connfd, cli_name, MAXDATASIZE, 0);//返回字节数num
   if(num == 0){
     close(connfd);
     printf("Client disconnected.\n");
     return ;
   }
-  cli_name[num] = '\0';
-  printf("Client's name is %s .\n", cli_name);
+  cli_name[num - 1] = '\0';//cli_name实际长度为num-1,字节数为num
+  printf("Client's name is %s\n", cli_name);
 
   while(num = recv(connfd, recvbuf, MAXDATASIZE, 0)){
-    recvbuf[num] = '\0';
-    printf("Received client %s message: %s .\n", cli_name, recvbuf);
+    recvbuf[num - 1] = '\0';
+    printf("Received client %s message:%s\n", cli_name, recvbuf);
     int i = 0;
     for(i = 0; i < num - 1; ++i){
       if((recvbuf[i] >= 'a' && recvbuf[i] <= 'z') || (recvbuf[i] >= 'A' && recvbuf[i] <= 'Z')){
@@ -93,7 +93,7 @@ void process_cli(int connfd, struct sockaddr_in client){
       }
       sendbuf[i] = recvbuf[i];
     }
-    sendbuf[num] = '\0';
+	sendbuf[num - 1] = '\0';
     send(connfd, sendbuf, strlen(sendbuf), 0);
   }
   close(connfd);
