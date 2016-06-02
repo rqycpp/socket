@@ -1,4 +1,5 @@
 //线程安全（TSD）服务器
+//增加了对客户所有的发送数据进行存储的功能
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -99,22 +100,22 @@ void process_cli(int connfd, struct sockaddr_in client)
     printf("Client disconnected.\n");
     return;
   }
-  cli_name[num] = '\0';
+  cli_name[num - 1] = '\0';
   printf("Client's name is %s.\n", cli_name);
 
   while(num = recv(connfd, recvbuf, MAXDATASIZE, 0)){
-    recvbuf[num] = '\0';
+    recvbuf[num - 1] = '\0';
     printf("Received client(%s) message:%s\n", cli_name, recvbuf);
-    savedata_r(recvbuf, num, cli_data);
+    savedata_r(recvbuf, num, cli_data);//线程安全函数
     int i;
-    for(i = 0; i < num; ++i){
-      sendbuf[num - 1 - i] = recvbuf[i];
+    for(i = 0; i < num - 1; ++i){
+      sendbuf[num - 2 - i] = recvbuf[i];
     }
-    sendbuf[num] = '\0';
+    sendbuf[num - 1] = '\0';
     send(connfd, sendbuf, strlen(sendbuf), 0);
   }
   close(connfd);
-  printf("Client( %s ) closed connection.\nUser's data %s \n", cli_name, cli_data);
+  printf("Client(%s) closed connection.\nUser's data [%s]\n", cli_name, cli_data);
 }
 
 void *function(void *arg)
@@ -137,7 +138,7 @@ void savedata_r(char *recvbuf, int len, char *cli_data)
     data = (struct ST_DATA *)malloc(sizeof(struct ST_DATA));
     //TSD关键字key与本线程动态分配内存区域进行绑定
     pthread_setspecific(key, data);
-    data->index = 0;
+    data->index = 0;//首次创建后初始为0，以后会不断递增。以线程为边界，与static不同。
   }
 
   //将客户收到的数据存放于缓冲区中
