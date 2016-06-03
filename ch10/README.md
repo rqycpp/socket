@@ -8,6 +8,10 @@
 
 > 编写一个多播程序，将本机的时间发送给网络中的两台主机。
 
+服务端：[mtserv](mtserv.c)，执行命令：`./tserv 224.0.2.3 1234`
+
+客户端：[mtcli](mtcli.c)，执行命令：`./tcli 224.0.2.3 1234`
+
 ## 上机实战
 
 > 请使用多播技术写一个多人聊天室程序。
@@ -39,3 +43,17 @@ setsockopt(sockfd, SOL_SOCKET, SO_BROADCAST, &on, sizeof(int));
 
 - 网卡可能接收相同MAC地址的多播数据帧（实际是不同的多播组），此时IP层发现不是本组的多播分组后
 将其丢弃。
+
+- 当加入或离开一个组时，要用到下面两个结构：
+
+```cpp
+struct ip_mreq{
+  struct in_addr imr_multiaddr; //IPv4的D类多播地址
+  struct in_addr interface; //本地接口IPv4地址
+}
+
+struct ipv6_mreq{
+  struct in6_addr ipv6mr_multiaddr;
+  unsigned int ipv6mr_interface;
+}
+```
