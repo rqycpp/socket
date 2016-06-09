@@ -41,3 +41,9 @@ bind(sockfd, (struct sockaddr *)&server, sizeof(server));
 
 ## 上机实战
 > 请编写一个TCP套接字程序，要求客户端根据用户输入的IP地址链接到相应的服务器，服务器等待客户的链接，当链接建立后，完成客户与服务器的信息交互。
+
+服务端程序：[Server](server.c) `./server`
+
+客户端程序：[Client](client.c) `./client localhost`
+
+功能简介：服务端将接收客户端发送的字符串，经大小写变换后返回。
