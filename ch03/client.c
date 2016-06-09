@@ -1,3 +1,5 @@
+//客户端程序：
+//向服务端发送字符串，经过大小写变换后返回。
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -47,25 +49,24 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	if((num = recv(sockfd, buf, MAXDATASIZE)) == -1)
-	{
-		printf("recv() error.\n");
-		exit(1);
-	}
+	//if((num = recv(sockfd, buf, MAXDATASIZE)) == -1)
+	//{
+		//printf("recv() error.\n");
+		//exit(1);
+	//}
 
 	printf("Connected to server.\n");
-	int num;
-	char buf[MAXDATASIZE];
 	while(1){
 		printf("Input:");
-		gets(buf);
+		//gets(buf);//dangerous
+		fgets(buf, MAXDATASIZE, stdin);
 		write(sockfd, buf, strlen(buf));
 		if((num = read(sockfd,buf, MAXDATASIZE)) == -1){
 			printf("read() error.\n");
 			exit(1);
 		}
 		buf[num] = '\0';
-		printf("Received:%s\n", buf);
+		printf("Output:%s", buf);
 	}
 
 	close(sockfd);

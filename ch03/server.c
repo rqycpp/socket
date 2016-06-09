@@ -1,3 +1,5 @@
+//服务端程序
+//接收客户端字符串，将其大小写变换后返回。
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,7 +11,7 @@
 #include <ctype.h>
 
 #define PORT 1234
-#define BACKLOG 1
+#define BACKLOG 5
 #define MAXDATASIZE 256
 
 int main()
@@ -63,11 +65,11 @@ int main()
     }
     for(i = 0; i < num; ++i){
       if(buf[i] >= 'a' && buf[i] <= 'z')
-        toupper(buf[i]);
+        buf[i] = toupper(buf[i]);
       else
-        tolower(buf[i]);
+        buf[i] = tolower(buf[i]);
     }
-    write( connectd, buf, num);
+    write( connectfd, buf, num);
   }
 
 	close(connectfd);
