@@ -28,7 +28,9 @@
 ## Exercise 3
 > 简述connect函数在UDP套接字编程中的作用。
 
-
+UDP套接字可以调用connect函数，但UDP调用的结果却与TCP完全不同。UDP调用connect函数，没有
+三次握手过程，**内核只是记录与之通信的对方的IP地址和端口号**，它们包含在传递给connect的
+套接口地址结构中，并立即返回给进程。
 
 ## 上机实战
 
@@ -51,3 +53,9 @@ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *
 #include <sys/socket.h>
 ssize_t sendto(int sockfd, const void *buf, size_t len, int flags, const struct sockaddr *to, int addrlen);
 ```
+
+- 调用了connect函数的UDP套接字为**已连接UDP套接字**，与未连接UDP套接字相比，它发生了如下变化：
+
+1. 再也不能给输出操作指定目的IP地址和端口号。即发送数据时不能使用sendto，要使用write或send。
+2. 不能用recvfrom函数接收数据，而要用read或recv函数。
+3. 异步错误由已连接UDP套接字返回给进程。
